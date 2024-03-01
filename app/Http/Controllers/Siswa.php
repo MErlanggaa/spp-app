@@ -26,13 +26,13 @@ class Siswa extends Controller
 
       $user = User::find($id);
 
-      if($request -> password = null){
+      if($request->password == null){
       $user->update($request->except(['_token', '_method']));
       return redirect()->to(url('akun'))->with(['dataEdit' => true]);
       }
       $user = User::find($id);
 
-      if($request -> password = null){
+      if($request->password == null){
       $user->update($request->except(['_token', '_method']));
       return redirect()->to(url('akun'))->with(['dataEdit' => true]);
       

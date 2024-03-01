@@ -12,7 +12,7 @@
 
             </h6>
         </div>
-        @if(Auth::check() && Auth::user()->level == 'admin')
+        @if(Auth::user()->level == 'admin')
 
         <div class="card-body">
             <div class="table-responsive">
@@ -30,7 +30,7 @@
                     <tbody>
                         @php
                         $no = 1; @endphp
-                        @foreach ($akun as $row)
+                        @foreach ($akunn as $row)
                         <tr>
                             <td width="5%">{{ $no++ }}</td>
                             <td>{{ $row->username }}</td>
@@ -53,7 +53,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('akun.update', $row->id) }}" method="POST">
+                                        <form action="/akun/update/{{ $row->id }}" method="POST">
                                             @csrf
                                             @method('PUT')
                                             <div class="form-group"> <label for="username">Username</label>
@@ -69,6 +69,7 @@
 
 
                                             <div class="form-group">
+                                                <label for="">Level</label>
                                                 <select name="level" class="form-control">
                                                     @if($row->level == 'admin')
                                                     <option value="admin">Admin</option>
@@ -103,7 +104,8 @@
     </div>
 </div>
 @endif
-@if(Auth::check() && Auth::user()->level == 'siswa')
+
+@if(Auth::user()->level == 'siswa')
 
 @foreach ($akunn as $row)
 
@@ -116,7 +118,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <form action="{{ route('akunn.update', $row->id) }}" method="POST">
+            <form action="/akun/update/{{ $row->id }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="form-group"> <label for="username">Ganti Username Akun</label>
@@ -145,14 +147,16 @@
 </div>
 @endforeach
 
-@endsection
 @endif
+@endsection
 
 
 
 
 @section('js')
-@if (session('dataEdit'))
+
+
+@if(session('dataEdit'))
 <script>
 const Toast = Swal.mixin({
     toast: true,
@@ -172,60 +176,5 @@ Toast.fire({
 })
 </script>
 @endif
-@if (session('dataDelete'))
-<script>
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-})
 
-Toast.fire({
-    icon: 'success',
-    title: 'Data Berhasil di Hapus'
-})
-</script>
-@endif
-<script>
-function printTable() {
-    var table = document.getElementById("dataTable");
-    if (table) {
-        var clonedTable = table.cloneNode(true);
-        var actionColumnIndex = 4; // index of the action column (starting from 0)
-
-        // Remove action column
-        clonedTable.querySelectorAll("tr").forEach(function(row) {
-            row.deleteCell(actionColumnIndex);
-        });
-
-        // Apply styles for printing
-        clonedTable.style.width = "100%"; // Set table width to 100% for printing
-        clonedTable.style.borderCollapse = "collapse"; // Collapse table borders
-        clonedTable.style.fontSize = "12px"; // Set font size
-
-        // Apply styles to table cells
-        clonedTable.querySelectorAll("td, th").forEach(function(cell) {
-            cell.style.border = "1px solid #dddddd"; // Add border to cells
-            cell.style.padding = "8px"; // Add padding to cells
-            cell.style.textAlign = "left"; // Align text to left
-        });
-
-        // Open a new window and print the table
-        var newWin = window.open('', 'Print-Window');
-        newWin.document.open();
-        newWin.document.write('<html><head><title>Print Table</title></head><body>' + clonedTable.outerHTML +
-            '</body></html>');
-        newWin.document.close();
-        newWin.print();
-        setTimeout(function() {
-            newWin.close();
-        }, 10);
-    }
-}
-</script>
+@endsection
