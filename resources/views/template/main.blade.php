@@ -35,7 +35,7 @@ scale=1, shrink-to-fit=no">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-cube"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">INVENTORY</div>
+                <div class="sidebar-brand-text mx-3">Spp Pembayaran</div>
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -77,6 +77,10 @@ scale=1, shrink-to-fit=no">
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="logout">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</a>
+                                @if(Auth::user()->level == 'siswa')
+                                <a class="dropdown-item" href="akun">
+                                    <i class="fas fa-user-alt fa-sm fa-fw mr-2 text-gray-400"></i>GantiPassword</a>
+                                @endif
                             </div>
                         </li>
                     </ul>

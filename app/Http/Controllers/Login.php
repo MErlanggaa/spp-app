@@ -31,9 +31,9 @@ class Login extends Controller
             $request->session()->regenerate();
             $user = Auth::user();
             if ($user->level == 'admin'){
-                return redirect()->intended('admin');
+                return redirect('/pembayaran');
             }elseif ($user->level == 'siswa'){
-                return redirect()->intended('siswa');
+                return redirect()->intended('/pembayaran');
             }
             return redirect()->intended('login');
         }
@@ -46,6 +46,6 @@ class Login extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('login');
+        return redirect('/login ');
     }
 }

@@ -35,6 +35,7 @@
                             <td>{{ $row->name }}</td>
                             <td>{{ $row->tgl_bayar }}</td>
                             <td>{{ $row->jumlah }}</td>
+
                         </tr>
                         @endforeach
                     </tbody>
